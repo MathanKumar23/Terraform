@@ -1,3 +1,5 @@
+# Private aks cluster
+
 provider "azurerm" {
   features {}
 }
@@ -15,6 +17,8 @@ module "aks" {
     vnet_name                   = var.vnet_name
     vnet_address_space          = var.vnet_address_space
     subnets                     = var.subnets
+    nsg_name                    = var.nsg_name
+    private_cluster_enabled     = true
 
     cluster_name                = var.cluster_name
     cluster_version             = var.cluster_version
@@ -31,5 +35,4 @@ module "aks" {
     spot_vm_size                = var.spot_vm_size
     max_spot_node_count         = var.max_spot_node_count
     min_spot_node_count         = var.min_spot_node_count
-    authorized_ip_ranges        = var.authorized_ip_ranges
 }

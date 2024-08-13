@@ -9,7 +9,7 @@ variable "subnets" {
     address_prefix  = string
   }))
 }
-
+variable "nsg_name" {}
 variable "cluster_name" {}
 variable "is_aks_cluster_enabled" {}
 variable "cluster_version" {}
@@ -21,15 +21,10 @@ variable "default_vm_size" {
   type        = string
 }
 
-# variable "api_server_access_profile" {
-#   type = object({
-#     authorized_ip_ranges = set(string)
-#   })
-# }
 
-variable "authorized_ip_ranges" {
-  type = set(string)
-}
+# variable "authorized_ip_ranges" {
+#   type = set(string)
+# }
 
 variable "ondemand_node_pool" {}
 variable "spot_node_pool" {}

@@ -31,8 +31,13 @@ variable "subnets" {
   description = "Map of subnet names to their configurations"
 }
 
+variable "nsg_name" {
+  type        = string
+  description = "The name of the Network security group."
+}
+
 variable "cluster_name" {
-  type = string
+  type        = string
   description = "The name of your AKS cluster (lowercase letters, numbers, hyphens, 1-12 characters)"
 }
 
@@ -46,6 +51,12 @@ variable "is_aks_cluster_enabled" {
   description = "Flag to enable or disable the AKS cluster creation."
 }
 
+variable "private_cluster_enabled" {
+  description = "Should this Kubernetes Cluster have its API server only exposed on internal IP addresses? This provides a Private IP Address for the Kubernetes API on the Virtual Network where the Kubernetes Cluster is located. Defaults to false. Changing this forces a new resource to be created."
+  type        = bool
+  default     = false
+}
+
 variable "default_node_count" {
   type        = number
   description = "The number of default nodes in the AKS cluster."
@@ -56,26 +67,25 @@ variable "default_vm_size" {
   description = "The size of the VM for the default node pool."
 }
 
-# variable "api_server_access_profile" {
-#   type = object({
-#     authorized_ip_ranges     = set(string)
-#     # subnet_id                = optional(string, null)
-#     # vnet_integration_enabled = optional(bool, false)
-#   })
-# }
-
 variable "authorized_ip_ranges" {
   type = set(string)
-  description = "List of authorized IP ranges for API server access"
+  description = "List of authorized IP ranges for API server access."
+  default = []
 }
 
+# variable "authorized_ip_ranges" {
+#   type = set(string)
+#   description = "List of authorized IP ranges for API server access"
+# }
+
 variable "ondemand_node_pool" {
-  type = string
-  description = "Name of ondemand_node_pool"
+  type        = string
+  description = "Name of the on-demand node pool"
 }
 
 variable "spot_node_pool" {
-  description = "Name of spot_node_pool"
+  type        = string
+  description = "Name of the spot node pool"
 }
 
 variable "ondemand_vm_size" {

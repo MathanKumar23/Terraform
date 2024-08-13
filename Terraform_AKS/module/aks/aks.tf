@@ -38,6 +38,37 @@ resource "azurerm_subnet" "subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
+# NSG with subnet association
+resource "azurerm_subnet_network_security_group_association" "association" {
+  for_each = var.subnets
+
+  subnet_id             = azurerm_subnet.subnet[each.key].id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+# Create NSG
+resource "azurerm_network_security_group" "nsg" {
+  name                = var.nsg_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+# Define the SSH Access Rule
+resource "azurerm_network_security_rule" "allow_ssh" {
+  name                        = "allow-ssh"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  network_security_group_name  = azurerm_network_security_group.nsg.name
+  resource_group_name          = azurerm_resource_group.rg.name
+}
+
+# Define the Kubernetes Access Rule
 
 # AKS Cluster
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -47,6 +78,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location            = azurerm_resource_group.rg.location
   dns_prefix          = var.cluster_name
   kubernetes_version  = var.cluster_version
+  private_cluster_enabled = var.private_cluster_enabled
 
   default_node_pool {
     name       = "default"
@@ -64,6 +96,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
 
+  # if public cluster use authorized ip for more security
   api_server_access_profile {
     authorized_ip_ranges = var.authorized_ip_ranges
   }
@@ -88,7 +121,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "ondemand_node_pool" {
   node_count     = var.ondemand_node_count
   max_count      = var.max_ondemand_node_count
   min_count      = var.min_ondemand_node_count
-  enable_auto_scaling = true  # to set min max count you need enable autoscale
+  enable_auto_scaling = true  # mandatory if you want autoscal - to set min max count you need enable autoscale
 
   tags = {
     Name = "${var.cluster_name}-ondemand-nodes"

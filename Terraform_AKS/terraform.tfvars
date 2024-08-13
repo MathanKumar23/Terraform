@@ -3,6 +3,7 @@ resource_group_name = "aksrg"
 location            = "West US"
 vnet_name = "aksvent"
 vnet_address_space = "10.16.0.0/16"
+nsg_name            = "aksnsg"
 subnets = {
   "subnet-1" = {
     name           = "subnet-1"
@@ -25,9 +26,9 @@ cluster_version             = "1.29.5"
 default_node_count          = 2
 default_vm_size             = "Standard_D2s_v3"
 
-authorized_ip_ranges = [
-    "0.0.0.0/0"  # Replace with specific IP ranges as needed
-]
+# authorized_ip_ranges = [
+#     "0.0.0.0/0"  # Replace with specific IP ranges as needed
+# ]
 
 # On-Demand Node Pool Configuration
 ondemand_node_pool       = "ondmdpool"
