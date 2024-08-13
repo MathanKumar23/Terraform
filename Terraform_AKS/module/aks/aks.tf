@@ -88,6 +88,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "ondemand_node_pool" {
   node_count     = var.ondemand_node_count
   max_count      = var.max_ondemand_node_count
   min_count      = var.min_ondemand_node_count
+  enable_auto_scaling = true  # to set min max count you need enable autoscale
 
   tags = {
     Name = "${var.cluster_name}-ondemand-nodes"
@@ -104,6 +105,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "spot_node_pool" {
   node_count     = var.spot_node_count
   max_count      = var.max_spot_node_count
   min_count      = var.min_spot_node_count
+  enable_auto_scaling = true
 
   tags = {
     Name = "${var.cluster_name}-spot-nodes"

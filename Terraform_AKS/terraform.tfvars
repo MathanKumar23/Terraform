@@ -21,7 +21,7 @@ subnets = {
 # AKS Cluster Configuration
 cluster_name                = "aks"
 is_aks_cluster_enabled      = true
-cluster_version             = "1.23.0"
+cluster_version             = "1.29.5"
 default_node_count          = 2
 default_vm_size             = "Standard_D2s_v3"
 
@@ -31,14 +31,14 @@ authorized_ip_ranges = [
 
 # On-Demand Node Pool Configuration
 ondemand_node_pool       = "ondmdpool"
-ondemand_vm_size         = "Standard_D4s_v3"
-ondemand_node_count      = 2
-max_ondemand_node_count  = 5
+ondemand_vm_size         = "Standard_D1s_v2"
+ondemand_node_count      = 1
+max_ondemand_node_count  = 2
 min_ondemand_node_count  = 1
 
 # Spot Node Pool Configuration
 spot_node_pool          = "spotnodepool"
-spot_vm_size            = "Standard_B2s"
+spot_vm_size            = "Standard_B1s"
 spot_node_count         = 1
-max_spot_node_count     = 3
+max_spot_node_count     = 2
 min_spot_node_count     = 1

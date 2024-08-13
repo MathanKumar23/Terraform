@@ -7,7 +7,7 @@ locals {
   env = var.env
 }
 module "aks" {
-    source = "./module"
+    source = "./module/aks"
 
     env                         =  var.env
     resource_group_name         = "${local.env}-${local.org}-${var.resource_group_name}"
