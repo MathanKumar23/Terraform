@@ -1,6 +1,5 @@
-# Azure Terraform Configuration
-
-This repository contains Terraform configurations for setting up a basic Azure environment including a resource group, virtual network, subnet, network interface, and a virtual machine.
+# Azure Terraform
+This repository contains Terraform configurations for setting up a basic Azure environment including a resource group, virtual network, subnet, network interface, and a virtual machine and other azure resources.
 
 ## Prerequisites
 
